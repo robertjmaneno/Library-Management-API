@@ -59,7 +59,7 @@ Install PostgreSQL and create a database named library_db.
 Update the database connection string in the configuration file (e.g., config.py):DATABASE_URL = "postgresql+psycopg2://username:password@localhost:5432/library_db"
 
 
-Run database migrations (if using Alembic):alembic upgrade head
+Run database migrations Alembic:alembic upgrade head
 
 
 
