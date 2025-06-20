@@ -17,7 +17,7 @@ The Library Management API is a backend web application designed to streamline a
 ## Objectives
 - **Efficient Library Operations:** Automate book management, borrowing, returning, and review collection.
 - **Intelligent Recommendations:** Leverage machine learning to suggest books tailored to user preferences.
-- **Role-based Access Control:** Secure sensitive operations with user roles (e.g., Admin, User).
+- **Role-based Access Control:** Secure sensitive operations with user roles (e.g., Admin, User, etc).
 - **Developer-Friendly:** Provide clear, interactive API documentation and easy integration points.
 - **Scalable Architecture:** Use modern technologies for high performance and future growth.
 - **Continuous Integration/Deployment:** Enable rapid development and deployment with best practices.
@@ -28,18 +28,27 @@ The Library Management API is a backend web application designed to streamline a
 
 ### User & Session Management
 - User registration and authentication
-- Role-based access (Admin, User)
+- Role-based access (Admin, User, etc)
 - Secure session handling
+- User activity logs and audit trails
 
 ### Library Administration
-- CRUD operations for books
-- Book borrowing and returning
-- Book availability tracking
+- CRUD operations for books and other items (magazines, DVDs, etc)
+- Book/item borrowing and returning
+- Book/item reservation system
+- Book/item availability tracking
+- Support for multiple item types (books, magazines, DVDs, etc)
+- Inventory management and stock tracking
 
 ### Reviews & Recommendations
 - Submit and manage book reviews with ratings
 - Retrieve reviews for each book
 - ML-based book recommendations (collaborative filtering)
+
+### Fines & Notifications
+- Overdue notifications for borrowed items
+- Fine calculation and management for late returns
+- Email or in-app notifications for reservations, due dates, and overdue items
 
 ### API & Documentation
 - RESTful endpoints for all operations
@@ -51,9 +60,12 @@ The Library Management API is a backend web application designed to streamline a
 ## Database Design
 The API uses a PostgreSQL database with a normalized schema, including:
 - **Users & Roles:** For authentication and access control
-- **Books:** Book details and inventory
+- **Books & Items:** Book details, inventory, and support for multiple item types
 - **Reviews:** User-submitted ratings and comments
-- **Borrow Records:** Track which user has borrowed which book and when
+- **Borrow Records:** Track which user has borrowed which item and when
+- **Reservations:** Manage item reservations and queueing
+- **Fines:** Track overdue fines and payments
+- **Activity Logs:** Record user actions for auditing
 
 > For a detailed overview of the database schema, see the [Database Design Documentation](#).
 
@@ -218,18 +230,18 @@ uvicorn main:app --reload
 
 ## API Endpoints
 
-| Method | Endpoint                      | Description                              |
-|--------|-------------------------------|------------------------------------------|
-| GET    | `/books`                      | Retrieve a list of all books             |
-| GET    | `/books/{book_id}`            | Retrieve details of a specific book      |
-| POST   | `/books`                      | Add a new book                           |
-| PUT    | `/books/{book_id}`            | Update an existing book                  |
-| DELETE | `/books/{book_id}`            | Delete a book                            |
-| POST   | `/books/{book_id}/borrow`     | Mark a book as borrowed                  |
-| POST   | `/books/{book_id}/return`     | Mark a book as returned                  |
-| POST   | `/books/{book_id}/reviews`    | Submit a review and rating for a book    |
-| GET    | `/books/{book_id}/reviews`    | Retrieve all reviews for a book          |
-| GET    | `/recommendations/{user_id}`  | Get book recommendations for a user      |
+| Method | Endpoint                          | Description                              |
+|--------|------------------------------------|------------------------------------------|
+| GET    | `/books`                          | Retrieve a list of all books             |
+| GET    | `/books/{book_slug}`              | Retrieve details of a specific book      |
+| POST   | `/books`                          | Add a new book                           |
+| PUT    | `/books/{book_slug}`              | Update an existing book                  |
+| DELETE | `/books/{book_slug}`              | Delete a book                            |
+| POST   | `/books/{book_slug}/borrow`       | Mark a book as borrowed                  |
+| POST   | `/books/{book_slug}/return`       | Mark a book as returned                  |
+| POST   | `/books/{book_slug}/reviews`      | Submit a review and rating for a book    |
+| GET    | `/books/{book_slug}/reviews`      | Retrieve all reviews for a book          |
+| GET    | `/recommendations/{user_slug}`    | Get book recommendations for a user      |
 
 ---
 
@@ -300,10 +312,7 @@ For questions or feedback, reach out to [robertjmaneno@gmail.com](mailto:robertj
 
 ---
 
-## Recommended Reading
 
-- **PostgreSQL:** _PostgreSQL: Up and Running_ by Regina Obe and Leo Hsu
-- **Machine Learning:** _Machine Learning for Hackers_ by Drew Conway and John Myles White
 
 
 ## Machine Learning Recommendations
