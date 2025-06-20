@@ -1,18 +1,143 @@
 # Library Management API
 
-A Library Management API built with FastAPI to manage a library's book inventory, user reviews, and provide book recommendations using machine learning. The API uses PostgreSQL for robust and scalable data management. It supports CRUD operations for books, user reviews, and integrates a machine learning-based recommendation system using collaborative filtering.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
+[![GitHub Issues](https://img.shields.io/github/issues/robertjmaneno/library-management-api.svg)](https://github.com/robertjmaneno/library-management-api/issues)
+[![GitHub Contributors](https://img.shields.io/github/contributors/robertjmaneno/library-management-api.svg)](https://github.com/robertjmaneno/library-management-api/graphs/contributors)
+[![Last Commit](https://img.shields.io/github/last-commit/robertjmaneno/library-management-api.svg)](https://github.com/robertjmaneno/library-management-api/commits/main)
+[![Latest Release](https://img.shields.io/github/v/release/robertjmaneno/library-management-api.svg)](https://github.com/robertjmaneno/library-management-api/releases)
+
+---
+
+## Project Overview
+The Library Management API is a backend web application designed to streamline and automate library operations. It manages book inventories, user reviews, and provides intelligent book recommendations using machine learning. Built with FastAPI and PostgreSQL, the API is robust, scalable, and ready for integration with any frontend or third-party system.
+
+---
+
+## Objectives
+- **Efficient Library Operations:** Automate book management, borrowing, returning, and review collection.
+- **Intelligent Recommendations:** Leverage machine learning to suggest books tailored to user preferences.
+- **Role-based Access Control:** Secure sensitive operations with user roles (e.g., Admin, User).
+- **Developer-Friendly:** Provide clear, interactive API documentation and easy integration points.
+- **Scalable Architecture:** Use modern technologies for high performance and future growth.
+- **Continuous Integration/Deployment:** Enable rapid development and deployment with best practices.
 
 ---
 
 ## Features
 
-- **CRUD Operations for Books:** Create, read, update, and delete books.
-- **Book Reviews:** Users can submit, retrieve, and manage book reviews with ratings.
-- **Book Recommendations:** ML-based recommendations using collaborative filtering (SVD algorithm).
-- **PostgreSQL Database:** Reliable and scalable data storage.
-- **FastAPI Benefits:** Automatic OpenAPI documentation (Swagger UI) and high performance.
-- **Input Validation:** Uses Pydantic for data validation and serialization.
-- **Asynchronous Support:** Leverages FastAPI's async capabilities.
+### User & Session Management
+- User registration and authentication
+- Role-based access (Admin, User)
+- Secure session handling
+
+### Library Administration
+- CRUD operations for books
+- Book borrowing and returning
+- Book availability tracking
+
+### Reviews & Recommendations
+- Submit and manage book reviews with ratings
+- Retrieve reviews for each book
+- ML-based book recommendations (collaborative filtering)
+
+### API & Documentation
+- RESTful endpoints for all operations
+- Interactive API docs (Swagger UI)
+- Input validation with Pydantic
+
+---
+
+## Database Design
+The API uses a PostgreSQL database with a normalized schema, including:
+- **Users & Roles:** For authentication and access control
+- **Books:** Book details and inventory
+- **Reviews:** User-submitted ratings and comments
+- **Borrow Records:** Track which user has borrowed which book and when
+
+> For a detailed overview of the database schema, see the [Database Design Documentation](#).
+
+---
+
+## Architecture
+- **Backend API:** FastAPI, exposing RESTful endpoints for all library operations
+- **Database:** PostgreSQL for persistent data storage
+- **ORM:** SQLModel for database operations
+- **Machine Learning:** Scikit-learn and Pandas for recommendations
+- **Containerization:** (Optional) Docker for development and deployment
+- **CI/CD:** (Optional) GitHub Actions for automated testing and deployment
+
+---
+
+## Development Workflow
+For setup and development instructions, see the [Development Documentation](#).
+
+**Quick Start:**
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/robertjmaneno/library-management-api.git
+   cd library-management-api
+   ```
+2. Set up a virtual environment and install dependencies:
+   ```sh
+   python -m venv venv
+   # On Unix/macOS
+   source venv/bin/activate
+   # On Windows
+   venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+3. Configure your PostgreSQL database and update the connection string in `config.py`.
+4. Run database migrations:
+   ```sh
+   alembic upgrade head
+   ```
+5. Start the application:
+   ```sh
+   uvicorn main:app --reload
+   ```
+6. Access the API at [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+---
+
+## Deployment Workflow
+For deployment instructions, see the [Deployment Documentation](#).
+
+- Use a production-grade ASGI server (e.g., Uvicorn or Hypercorn)
+- Set up a reverse proxy (e.g., Nginx) for SSL and load balancing
+- Configure environment variables for database and ML settings
+- Example:
+  ```sh
+  uvicorn main:app --host 0.0.0.0 --port 8000
+  ```
+
+---
+
+## Contributing 🤝
+1. Fork the repository.
+2. Create a new branch:
+   ```sh
+   git checkout -b feature-branch
+   ```
+3. Make your changes and commit:
+   ```sh
+   git commit -am 'Add new feature'
+   ```
+4. Push to the branch:
+   ```sh
+   git push origin feature-branch
+   ```
+5. Create a new Pull Request.
+
+---
+
+## Licensing 📄
+Library Management API is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgements 🙌
+Special thanks to the developers of FastAPI, SQLModel, PostgreSQL, Scikit-learn, and Pydantic for their excellent tools and libraries.
 
 ---
 
@@ -20,7 +145,7 @@ A Library Management API built with FastAPI to manage a library's book inventory
 
 - **FastAPI:** API framework
 - **PostgreSQL:** Relational database
-- **SQLAlchemy:** ORM for database operations
+- **SQLModel:** ORM for database operations
 - **Pydantic:** Data validation and serialization
 - **Uvicorn:** ASGI server
 - **Scikit-learn & Pandas:** ML-based recommendations
@@ -58,17 +183,7 @@ A Library Management API built with FastAPI to manage a library's book inventory
    ```sh
    pip install -r requirements.txt
    ```
-   Example `requirements.txt`:
-   ```
-   fastapi==0.115.0
-   uvicorn==0.30.6
-   sqlalchemy==2.0.35
-   pydantic==2.9.2
-   psycopg2-binary==2.9.9
-   scikit-learn==1.5.1
-   pandas==2.2.2
-   numpy==1.26.4
-   ```
+
 
 4. **Set Up PostgreSQL:**
    - Install PostgreSQL and create a database named `library_db`.
@@ -176,44 +291,6 @@ To run tests, use [pytest](https://docs.pytest.org/):
 pip install pytest
 pytest
 ```
-
----
-
-## Deployment
-
-- Use a production-grade ASGI server (e.g., Uvicorn or Hypercorn).
-- Set up a reverse proxy (e.g., Nginx) for load balancing and SSL.
-- Configure environment variables for database connections and ML model settings.
-
-Example deployment:
-```sh
-uvicorn main:app --host 0.0.0.0 --port 8000
-```
-
----
-
-## Contributing
-
-1. Fork the repository.
-2. Create a new branch:
-   ```sh
-   git checkout -b feature-branch
-   ```
-3. Make changes and commit:
-   ```sh
-   git commit -m "Add feature"
-   ```
-4. Push to the branch:
-   ```sh
-   git push origin feature-branch
-   ```
-5. Open a Pull Request.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
 
 ---
 
