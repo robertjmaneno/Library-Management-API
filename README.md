@@ -145,32 +145,7 @@ curl -X POST "http://127.0.0.1:8000/books/1/reviews" -H "Content-Type: applicati
 curl -X GET "http://127.0.0.1:8000/recommendations/1"
 ```
 
----
 
-## Database Schema
-
-**Books**
-- `id`: Integer, Primary Key
-- `title`: String, Required
-- `author`: String, Required
-- `isbn`: String, Unique
-- `published_year`: Integer, Optional
-- `available`: Boolean, Default True
-
-**Reviews**
-- `id`: Integer, Primary Key
-- `book_id`: Integer, Foreign Key (Books)
-- `user_id`: Integer, Foreign Key (Users)
-- `rating`: Integer (1-5), Required
-- `review_text`: Text, Optional
-- `created_at`: Timestamp, Default Now
-
-**Users**
-- `id`: Integer, Primary Key
-- `username`: String, Unique
-- `email`: String, Optional
-
----
 
 ## ML-Based Recommendation System
 
